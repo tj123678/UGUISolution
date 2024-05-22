@@ -19,7 +19,6 @@ public class CircleImage : Image
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         vh.Clear();
-
         _vertexList = new List<Vector3>();
 
         AddVertex(vh, segements);
@@ -33,15 +32,18 @@ public class CircleImage : Image
         float heigth = rectTransform.rect.height;
         int realSegments = (int)(segements * showPercent);
 
+        //这个代表的是图片的大小，是个矩形框
         Vector4 uv = overrideSprite != null ? DataUtility.GetOuterUV(overrideSprite) : Vector4.zero;
         float uvWidth = uv.z - uv.x;
         float uvHeight = uv.w - uv.y;
         Vector2 uvCenter = new Vector2(uvWidth * 0.5f, uvHeight * 0.5f);
+        //根据图片大小和rect的大小，求出换算关系
         Vector2 convertRatio = new Vector2(uvWidth / width, uvHeight / heigth);
 
         float radian = (2 * Mathf.PI) / segements;
         float radius = width * 0.5f;
 
+        //求出中心点
         Vector2 originPos = new Vector2((0.5f - rectTransform.pivot.x) * width, (0.5f - rectTransform.pivot.y) * heigth);
         Vector2 vertPos = Vector2.zero;
 
@@ -52,6 +54,7 @@ public class CircleImage : Image
         int vertexCount = realSegments + 1;
         float curRadian = 0;
         Vector2 posTermp = Vector2.zero;
+        //添加剩余顶点
         for (int i = 0; i < segements + 1; i++)
         {
             float x = Mathf.Cos(curRadian) * radius;
@@ -86,6 +89,7 @@ public class CircleImage : Image
     private void AddTriangle(VertexHelper vh, int realSegements)
     {
         int id = 1;
+        //添加面片
         for (int i = 0; i < realSegements; i++)
         {
             vh.AddTriangle(id, 0, id + 1);
@@ -98,6 +102,7 @@ public class CircleImage : Image
         UIVertex vertexTemp = new UIVertex();
         vertexTemp.color = col;
         vertexTemp.position = pos;
+        //这里需要注意，根据rect中的位置求出uv位置
         vertexTemp.uv0 = new Vector2(uvPos.x * uvScale.x + uvCenter.x, uvPos.y * uvScale.y + uvCenter.y);
         return vertexTemp;
     }
