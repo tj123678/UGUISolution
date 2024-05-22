@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CustomImage : Image
+public class CustomImage : Image,IPointerClickHandler
 {
     private PolygonCollider2D _polygon;
 
@@ -24,5 +25,10 @@ public class CustomImage : Image
         Vector3 point;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, screenPoint, eventCamera, out point);
         return Polygon.OverlapPoint(point);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("点击了");
     }
 }

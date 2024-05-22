@@ -29,7 +29,7 @@ public class ClollideUI : MonoBehaviour,IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         ChangeColor();
-        //ExecuteAll(eventData);
+        // ExecuteAll(eventData);
     }
 
     public void ExecuteAll(PointerEventData eventData)
